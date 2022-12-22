@@ -12,7 +12,7 @@ export const getAllProducts = () => {
 export const getProduct = (productUrl) => {
   return axios
     .get(`https://api.predic8.de:443${productUrl}`)
-    .then((data) => data.data)
+    .then((data) => data?.data)
     .catch((error) => {
       console.error(error);
     });

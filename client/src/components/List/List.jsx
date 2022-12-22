@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   getAllProducts,
   getProduct,
@@ -11,10 +11,12 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
+// Import Context
+import { ProductContext } from "../Context/ProductContext.jsx";
 const List = () => {
+  const { product, setProduct } = useContext(ProductContext);
   const [data, setData] = useState(null);
   const [select, setSelected] = useState("");
-  const [product, setProduct] = useState(null);
 
   const handleChange = async (e) => {
     setSelected(e.target.value);
