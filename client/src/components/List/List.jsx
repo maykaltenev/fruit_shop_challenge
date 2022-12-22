@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import getAllProducts from "../../hooks/fetcher/getAllProducts.jsx";
+import {
+  getAllProducts,
+  getProduct,
+} from "../../hooks/fetcher/getProducts.jsx";
 
 // Material UI Imports
 import Box from "@mui/material/Box";
@@ -11,11 +14,12 @@ import Select from "@mui/material/Select";
 const List = () => {
   const [data, setData] = useState(null);
   const [select, setSelected] = useState("");
+  const [product, setProduct] = useState(null);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setSelected(e.target.value);
   };
-  console.log(select);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await getAllProducts();
@@ -23,7 +27,15 @@ const List = () => {
     };
     fetchData();
   }, []);
-  console.log(data);
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const found = data?.find((item) => item?.name === select);
+      const result = await getProduct(found?.product_url);
+      setProduct(result);
+    };
+    fetchProduct();
+  }, [select]);
+  console.log(product);
   return (
     <div>
       {data && (

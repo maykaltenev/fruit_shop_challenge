@@ -3,7 +3,7 @@
 # Aufgabe: Webanwendung
 
 Erstellen Sie eine Webanwendung in einem der folgenden Frameworks: Angular, React, Vue.
-Unser Ziel ist es, ein Frontend für einen fiktiven Obstladen zu entwickeln. Das Backend-Team hat bereits fleißig an der Entwicklung der API gearbeitet. Sie können sich mit Hilfe der Dokumentation [hier](https://api.predic8.de/shop/docs).
+Unser Ziel ist es, ein Frontend für einen fiktiven Obstladen zu entwickeln. Das Backend-Team hat bereits fleißig an der Entwicklung der API gearbeitet. Sie können sich mit Hilfe der Dokumentation [hier](https://api.predic8.de/  shop/docs).
 Für unser MVP haben wir die folgenden User Stories ausgewählt, die erfüllt werden sollen.
 Wir empfehlen dringend die Verwendung einer Komponentenbibliothek wie Material UI.
 Wenn Sie sich dafür entscheiden, andere Bibliotheken von Drittanbietern einzubinden, abgesehen vom Framework und der Komponentenbibliothek, geben Sie bitte eine Zusammenfassung Ihrer Argumentation an. User Story 4 und 5 sind optional.
