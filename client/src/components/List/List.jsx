@@ -18,7 +18,7 @@ const List = () => {
   const [data, setData] = useState(null);
   const [select, setSelected] = useState("");
 
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     setSelected(e.target.value);
   };
 
@@ -41,7 +41,7 @@ const List = () => {
   return (
     <div>
       {data && (
-        <Box sx={{ minWidth: 120 }}>
+        <Box sx={{ maxWidth: 220, marginY: 2 }}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Fruit</InputLabel>
             <Select
