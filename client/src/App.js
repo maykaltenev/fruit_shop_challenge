@@ -7,14 +7,15 @@ import { ProductContext } from "./components/Context/ProductContext";
 import NavTabs from "./components/NavTabs/NavTabs";
 
 
-
 function App() {
   const { product } = useContext(ProductContext);
   return (
     <div>
       <NavTabs />
       <List />
-      {product && <Card />}
+      {product
+        && <Card />}
+
     </div>
   );
 }
