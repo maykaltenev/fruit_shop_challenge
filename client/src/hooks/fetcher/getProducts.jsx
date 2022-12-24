@@ -19,8 +19,9 @@ export const getProduct = (productUrl) => {
 };
 
 export const getProducts = (productUrl) => {
+  console.log(productUrl);
   return axios
-    .all(productUrl)
+    .all(productUrl.map((url) => axios.get(url)))
     .then((data) => data.map((data) => data?.data))
     .catch((error) => {
       console.error(error);

@@ -27,6 +27,7 @@ export default function NavTabs() {
 
   useEffect(() => {
     const fetchProduct = async () => {
+      console.log("cat", category);
       const found = category
         ?.map((item) =>
           item?.products?.map(
@@ -34,8 +35,8 @@ export default function NavTabs() {
           )
         )
         .flat();
-      console.log(found);
-      setProduct(found);
+      const result = await getProducts(found);
+      console.log("all products", result);
     };
 
     fetchProduct();
