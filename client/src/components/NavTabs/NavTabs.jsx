@@ -4,6 +4,7 @@ import { useEffect, useContext } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+
 //Import fetching categories and products
 import { getAllCategories } from "../../hooks/fetcher/getCategory";
 import { getProduct, getProducts } from "../../hooks/fetcher/getProducts";
@@ -11,15 +12,16 @@ import { getProduct, getProducts } from "../../hooks/fetcher/getProducts";
 import { ProductContext } from "../Context/ProductContext.jsx";
 
 export default function NavTabs() {
-  const { category, setCategory, setProduct, product } =
+  const { category, setCategory, setResult, setProduct, product } =
     useContext(ProductContext);
   const handleChange = (event, newValue) => {
+    console.log("value", newValue);
     setCategory(newValue);
   };
   useEffect(() => {
     const fetchData = async () => {
       const response = await getAllCategories();
-      console.log(response);
+      console.log("response", response);
       setCategory(response);
     };
     fetchData();
@@ -35,22 +37,29 @@ export default function NavTabs() {
           )
         )
         .flat();
-      const result = await getProducts(found);
-      console.log("all products", result);
+      const productResult = await getProducts(found);
+      console.log(productResult);
+      setResult(productResult);
     };
-
     fetchProduct();
-  }, []);
+  }, [category]);
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Tabs
-        onChange={handleChange}
-        value={0}
-        aria-label="Tabs where each tab needs to be selected manually"
-      >
-        <Tab label="All" />
-      </Tabs>
+      {category && (
+        <Tabs
+          onChange={handleChange}
+          value={category}
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
+        >
+          <Tab label="All" />
+          {category?.map((category, i) => (
+            <Tab key={i} label={category?.name} />
+          ))}
+        </Tabs>
+      )}
     </Box>
   );
 }
