@@ -8,7 +8,7 @@ import NavTabs from "./components/NavTabs/NavTabs";
 
 
 function App() {
-  const { product, category, result } = useContext(ProductContext);
+  const { product, result } = useContext(ProductContext);
   return (
     <div>
       <NavTabs />
