@@ -9,12 +9,12 @@ import NavTabs from "./components/NavTabs/NavTabs";
 
 function App() {
   const { product, result } = useContext(ProductContext);
+
   return (
     <div>
       <NavTabs />
       <List />
-      {product
-        && <Card />}
+      {product && <Card />}
       {result && result?.map(item => <ComplexCard product={item} />)}
 
     </div>

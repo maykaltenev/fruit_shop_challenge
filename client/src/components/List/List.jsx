@@ -14,7 +14,7 @@ import Select from "@mui/material/Select";
 // Import Context
 import { ProductContext } from "../Context/ProductContext.jsx";
 const List = () => {
-  const { product, setProduct } = useContext(ProductContext);
+  const { product, setProduct, setResult } = useContext(ProductContext);
   const [data, setData] = useState(null);
   const [select, setSelected] = useState("");
 
@@ -34,6 +34,7 @@ const List = () => {
       const found = data?.find((item) => item?.name === select);
       const result = await getProduct(found?.product_url);
       setProduct(result);
+      setResult(null);
     };
     fetchProduct();
   }, [select]);

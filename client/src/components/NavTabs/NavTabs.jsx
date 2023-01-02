@@ -28,47 +28,51 @@ export default function NavTabs() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getAllCategories();
-      console.log(response, "first run");
-      setAllCategory(response);
+    const fetchData = () => {
+      setTimeout(async () => {
+        const response = await getAllCategories();
+        setAllCategory(response);
+      }, 1000);
     };
     fetchData();
   }, []);
 
-  useEffect(
-    (category) => {
-      const fetchProduct = async (category) => {
-        console.log("all", category);
-        if (category !== 0 && category !== undefined) {
-          const aCategory = await getACategory(category);
-          console.log("found", aCategory);
-        }
-      };
-      // } else {
-      //   const found = allCategory
-      //     ?.map((item) =>
-      //       item?.products?.map(
-      //         (item) => `https://api.predic8.de:443${item?.product_url}`
-      //       )
-      //     )
-      //     .flat();
-      //   const productResult = await getProducts(found);
-      //   console.log(productResult);
-      //   setResult(productResult);
-      // }
-      // };
-      fetchProduct();
-    },
-    [category]
-  );
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (category !== 0 && category !== undefined) {
+        const aCategory = await getACategory(category);
+        const found = aCategory?.map(
+          (item) => `https://api.predic8.de:443${item?.product_url}`
+        );
+        setTimeout(async () => {
+          const productResult = await getProducts(found);
+          setResult(productResult);
+          setProduct(null);
+        }, 1000);
+      } else {
+        const found = allCategory
+          ?.map((item) =>
+            item?.products?.map(
+              (item) => `https://api.predic8.de:443${item?.product_url}`
+            )
+          )
+          .flat();
+        setTimeout(async () => {
+          const productResult = await getProducts(found);
+          setResult(productResult);
+          setProduct(null);
+        }, 1000);
+      }
+    };
+    fetchProduct();
+  }, [category]);
 
   return (
     <Box sx={{ width: "100%" }}>
       {allCategory && (
         <Tabs
           onChange={handleChange}
-          value={allCategory?.name}
+          value={category}
           variant="scrollable"
           scrollButtons
           allowScrollButtonsMobile
