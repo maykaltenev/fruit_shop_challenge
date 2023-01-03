@@ -31,8 +31,9 @@ export default function NavTabs() {
     const fetchData = () => {
       setTimeout(async () => {
         const response = await getAllCategories();
+        console.log(response);
         setAllCategory(response);
-      }, 1000);
+      }, 2000);
     };
     fetchData();
   }, []);
@@ -40,24 +41,25 @@ export default function NavTabs() {
   useEffect(() => {
     const fetchProduct = async () => {
       if (category !== 0 && category !== undefined) {
-        const aCategory = await getACategory(category);
-        const found = aCategory?.map(
-          (item) => `https://api.predic8.de:443${item?.product_url}`
-        );
         setTimeout(async () => {
+          const aCategory = await getACategory(category);
+          const found = aCategory?.map(
+            (item) => `https://api.predic8.de:443${item?.product_url}`
+          );
+
           const productResult = await getProducts(found);
           setResult(productResult);
           setProduct(null);
-        }, 1000);
+        }, 2000);
       } else {
-        const found = allCategory
-          ?.map((item) =>
-            item?.products?.map(
-              (item) => `https://api.predic8.de:443${item?.product_url}`
-            )
-          )
-          .flat();
         setTimeout(async () => {
+          const found = allCategory
+            ?.map((item) =>
+              item?.products?.map(
+                (item) => `https://api.predic8.de:443${item?.product_url}`
+              )
+            )
+            .flat();
           const productResult = await getProducts(found);
           setResult(productResult);
           setProduct(null);

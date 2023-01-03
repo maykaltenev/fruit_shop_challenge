@@ -15,7 +15,7 @@ function App() {
       <NavTabs />
       <List />
       {product && <Card />}
-      {result && result?.map(item => <ComplexCard product={item} />)}
+      {result && result?.map((item, i) => <ComplexCard key={i} product={item} />)}
 
     </div>
   );

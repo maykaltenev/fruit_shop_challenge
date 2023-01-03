@@ -10,7 +10,7 @@ export const getAllCategories = () => {
     .all([request1, request2, request3, request4, request5])
     .then((data) => data?.map((data) => data?.data))
     .catch((error) => {
-      console.error(error);
+      console.log(error);
     });
 };
 
@@ -20,6 +20,6 @@ export const getACategory = (category) => {
     .get(`https://api.predic8.de/shop/categories/${category}`)
     .then((data) => data?.data?.products)
     .catch((error) => {
-      console.error(error);
+      console.log(error);
     });
 };
