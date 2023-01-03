@@ -1,8 +1,6 @@
 import React, { useState } from "react";
+import MenuItem from "@mui/material/MenuItem";
 import { getSuggestions } from "../../hooks/fetcher/getSuggestion";
-
-import axios from "axios";
-import { useEffect } from "react";
 
 export default function SearchInput() {
   const [searchText, setSearchText] = useState("");
@@ -29,7 +27,9 @@ export default function SearchInput() {
       <input type="text" value={searchText} onChange={handleChange} />
       <ul>
         {suggestions?.map((suggestion, i) => (
-          <li key={i}>{suggestion?.name}</li>
+          <MenuItem sx={{ width: 300 }} key={i}>
+            {suggestion?.name}
+          </MenuItem>
         ))}
       </ul>
       <button onClick={() => setSuggestions([])}>Clear Suggestions</button>
