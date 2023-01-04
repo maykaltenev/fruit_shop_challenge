@@ -12,7 +12,7 @@ import { getProduct, getProducts } from "../../hooks/fetcher/getProducts";
 import { getACategory } from "../../hooks/fetcher/getCategory";
 //Import Context
 import { ProductContext } from "../Context/ProductContext.jsx";
-
+import ComplexCard from "../ComplexCard/ComplexCard";
 export default function NavTabs() {
   const {
     allCategory,
@@ -21,6 +21,7 @@ export default function NavTabs() {
     setResult,
     setCategory,
     setProduct,
+    result,
     product,
   } = useContext(ProductContext);
   const [isError, setIsError] = useState(false);
@@ -51,7 +52,7 @@ export default function NavTabs() {
           setTimeout(async () => {
             try {
               const aCategory = await getACategory(category);
-              console.log(aCategory);
+
               if (aCategory) {
                 const found = aCategory?.map(
                   (item) => `https://api.predic8.de:443${item?.product_url}`

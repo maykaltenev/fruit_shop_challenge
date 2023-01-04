@@ -12,7 +12,7 @@ import SearchInput from "./components/SearchInput/SearchInput";
 import NavTabs from "./components/NavTabs/NavTabs";
 import DetailedPage from './components/DetailedPage/DetailedPage.jsx'
 import Home from "./components/Home/Home";
-
+import CategoryCard from "./components/CategoryCard/CategoryCard";
 function App() {
   const { product, result } = useContext(ProductContext);
 
@@ -22,7 +22,7 @@ function App() {
       <Routes >
         <Route path="/" element={< Home />} />
         <Route path="/list" element={<Card />} />
-        <Route path="/tabs" element={result?.map((item, i) => <ComplexCard key={i} product={item} />)} />
+        <Route path="/tabs" element={<CategoryCard />} />
         < Route path="/product/:name" element={<DetailedPage />} />
       </Routes>
 

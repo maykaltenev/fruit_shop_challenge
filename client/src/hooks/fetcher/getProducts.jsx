@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getAllProducts = () => {
   return axios
-    .get("https://api.predic8.de:443/shop/products/?page=1&limit=99999/")
+    .get("https://api.predic8.de:443/shop/products/?page=1&limit=999")
     .then((data) => data?.data?.products)
     .catch((error) => {
       console.error(error);

@@ -15,9 +15,9 @@ import { getProduct } from "../../hooks/fetcher/getProducts";
 
 export default function SearchInput() {
   const [searchText, setSearchText] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
 
-  const { detailed, setDetailed } = useContext(ProductContext);
+  const { detailed, setDetailed, suggestions, setSuggestions } =
+    useContext(ProductContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {

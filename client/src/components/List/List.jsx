@@ -15,8 +15,9 @@ import Select from "@mui/material/Select";
 // Import Context
 import { ProductContext } from "../Context/ProductContext.jsx";
 const List = () => {
-  const { product, setProduct, setResult } = useContext(ProductContext);
-  const [data, setData] = useState(null);
+  const { data, setData, product, setProduct, setResult } =
+    useContext(ProductContext);
+
   const [select, setSelected] = useState("");
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -28,6 +29,7 @@ const List = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getAllProducts();
+      console.log("response", response);
       setData(response);
     };
     fetchData();

@@ -5,6 +5,8 @@ const ProductContextProvider = ({ children }) => {
   const [allCategory, setAllCategory] = useState(0);
   const [category, setCategory] = useState(0);
   const [result, setResult] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [data, setData] = useState(null);
   const getAnswersFromLocalStorage = () => {
     const product = localStorage.getItem("productName");
     if (product) {
@@ -18,6 +20,8 @@ const ProductContextProvider = ({ children }) => {
   return (
     <ProductContext.Provider
       value={{
+        suggestions,
+        setSuggestions,
         product,
         setProduct,
         category,
@@ -28,6 +32,8 @@ const ProductContextProvider = ({ children }) => {
         setResult,
         detailed,
         setDetailed,
+        data,
+        setData,
       }}
     >
       {children}
