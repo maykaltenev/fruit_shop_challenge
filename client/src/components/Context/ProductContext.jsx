@@ -5,6 +5,7 @@ const ProductContextProvider = ({ children }) => {
   const [allCategory, setAllCategory] = useState(0);
   const [category, setCategory] = useState(0);
   const [result, setResult] = useState(null);
+  const [detailed, setDetailed] = useState(null);
   return (
     <ProductContext.Provider
       value={{
@@ -16,6 +17,8 @@ const ProductContextProvider = ({ children }) => {
         setAllCategory,
         result,
         setResult,
+        detailed,
+        setDetailed,
       }}
     >
       {children}

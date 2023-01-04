@@ -3,7 +3,8 @@ import {
   getAllProducts,
   getProduct,
 } from "../../hooks/fetcher/getProducts.jsx";
-
+// Router
+import { useNavigate } from "react-router-dom";
 // Material UI Imports
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -17,10 +18,12 @@ const List = () => {
   const { product, setProduct, setResult } = useContext(ProductContext);
   const [data, setData] = useState(null);
   const [select, setSelected] = useState("");
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     console.log(e.target.value);
     setSelected(e.target.value);
+    setProduct(null);
+    navigate("/list");
   };
 
   useEffect(() => {
@@ -36,12 +39,10 @@ const List = () => {
       const found = data?.find((item) => item?.name === select);
       const result = await getProduct(found?.product_url);
       setProduct(result);
-      setResult(null);
     };
     fetchProduct();
   }, [select]);
 
-  console.log(product);
   return (
     <div>
       {data && (

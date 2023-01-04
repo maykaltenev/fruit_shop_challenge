@@ -1,11 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
+// Routes
+import { useNavigate, useParams } from "react-router-dom";
+// MaterialUI Components
 import MenuItem from "@mui/material/MenuItem";
+// Context
+import { ProductContext } from "../Context/ProductContext.jsx";
+
+// Fetchers
 import { getSuggestions } from "../../hooks/fetcher/getSuggestion";
 import { getProduct } from "../../hooks/fetcher/getProducts";
+
 export default function SearchInput() {
   const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [chosen, setChosen] = useState("");
+  const { detailed, setDetailed } = useContext(ProductContext);
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setSearchText(e.target.value);
     if (searchText === "") {
@@ -27,16 +38,17 @@ export default function SearchInput() {
       0,
       e.target.innerHTML.indexOf("<")
     );
-    setChosen(value);
-  };
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const found = suggestions?.find((item) => item?.name === chosen);
+    const fetchProduct = async (value) => {
+      const found = suggestions?.find((item) => item?.name === value);
       const result = await getProduct(found?.product_url);
-      console.log(result);
+      setDetailed(result);
+      navigate(`/product/${result?.name}`);
+      setSearchText("");
+      setSuggestions([]);
     };
-    fetchProduct();
-  }, [chosen]);
+    fetchProduct(value);
+  };
+
   return (
     <div>
       <input type="text" value={searchText} onChange={handleChange} />

@@ -4,7 +4,8 @@ import { useEffect, useContext } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-
+// Router
+import { useNavigate } from "react-router-dom";
 //Import fetching categories and products
 import { getAllCategories } from "../../hooks/fetcher/getCategory";
 import { getProduct, getProducts } from "../../hooks/fetcher/getProducts";
@@ -22,9 +23,13 @@ export default function NavTabs() {
     setProduct,
     product,
   } = useContext(ProductContext);
+  const navigate = useNavigate();
+
   const handleChange = (event, newValue) => {
     console.log("value", newValue);
     setCategory(newValue);
+    setProduct(null);
+    navigate("/tabs");
   };
 
   useEffect(() => {
@@ -48,7 +53,6 @@ export default function NavTabs() {
           );
           const productResult = await getProducts(found);
           setResult(productResult);
-          setProduct(null);
         }, 2000);
       } else {
         setTimeout(async () => {
@@ -61,7 +65,6 @@ export default function NavTabs() {
             .flat();
           const productResult = await getProducts(found);
           setResult(productResult);
-          setProduct(null);
         }, 1000);
       }
     };
