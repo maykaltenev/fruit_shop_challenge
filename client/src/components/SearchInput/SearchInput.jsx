@@ -21,13 +21,21 @@ export default function SearchInput() {
       });
     }
   };
+  // Using vanilla innerHTML to grab the rendered value, because "e.target.value" ref to 0
+  const handleClick = (e) => {
+    const value = e.target.innerHTML.substring(
+      0,
+      e.target.innerHTML.indexOf("<")
+    );
+    console.log(value);
+  };
 
   return (
     <div>
       <input type="text" value={searchText} onChange={handleChange} />
-      <ul>
+      <ul onClick={handleClick}>
         {suggestions?.map((suggestion, i) => (
-          <MenuItem sx={{ width: 300 }} key={i}>
+          <MenuItem value={suggestion?.name} sx={{ width: 300 }} key={i}>
             {suggestion?.name}
           </MenuItem>
         ))}

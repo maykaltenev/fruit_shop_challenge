@@ -46,7 +46,6 @@ export default function NavTabs() {
           const found = aCategory?.map(
             (item) => `https://api.predic8.de:443${item?.product_url}`
           );
-
           const productResult = await getProducts(found);
           setResult(productResult);
           setProduct(null);

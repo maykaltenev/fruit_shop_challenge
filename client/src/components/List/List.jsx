@@ -19,6 +19,7 @@ const List = () => {
   const [select, setSelected] = useState("");
 
   const handleChange = (e) => {
+    console.log(e.target.value);
     setSelected(e.target.value);
   };
 
@@ -29,6 +30,7 @@ const List = () => {
     };
     fetchData();
   }, []);
+
   useEffect(() => {
     const fetchProduct = async () => {
       const found = data?.find((item) => item?.name === select);
@@ -38,6 +40,7 @@ const List = () => {
     };
     fetchProduct();
   }, [select]);
+
   console.log(product);
   return (
     <div>
