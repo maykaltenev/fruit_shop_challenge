@@ -5,7 +5,15 @@ const ProductContextProvider = ({ children }) => {
   const [allCategory, setAllCategory] = useState(0);
   const [category, setCategory] = useState(0);
   const [result, setResult] = useState(null);
-  const [detailed, setDetailed] = useState(null);
+  const getAnswersFromLocalStorage = () => {
+    const product = localStorage.getItem("productName");
+    if (product) {
+      return JSON.parse(localStorage.getItem("productName"));
+    } else {
+      return "[]";
+    }
+  };
+  const [detailed, setDetailed] = useState(getAnswersFromLocalStorage());
 
   return (
     <ProductContext.Provider

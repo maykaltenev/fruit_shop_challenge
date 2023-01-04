@@ -45,6 +45,7 @@ export default function SearchInput() {
       const found = suggestions?.find((item) => item?.name === value);
       const result = await getProduct(found?.product_url);
       setDetailed(result);
+      localStorage.setItem("productName", JSON.stringify(result));
       navigate(`/product/${result?.name}`);
       setSearchText("");
       setSuggestions([]);
