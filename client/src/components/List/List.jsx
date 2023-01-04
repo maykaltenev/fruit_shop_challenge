@@ -22,7 +22,6 @@ const List = () => {
   const handleChange = (e) => {
     console.log(e.target.value);
     setSelected(e.target.value);
-    setProduct(null);
     navigate("/list");
   };
 
@@ -38,6 +37,7 @@ const List = () => {
     const fetchProduct = async () => {
       const found = data?.find((item) => item?.name === select);
       const result = await getProduct(found?.product_url);
+      console.log(result);
       setProduct(result);
     };
     fetchProduct();

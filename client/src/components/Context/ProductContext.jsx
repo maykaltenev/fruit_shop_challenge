@@ -6,6 +6,7 @@ const ProductContextProvider = ({ children }) => {
   const [category, setCategory] = useState(0);
   const [result, setResult] = useState(null);
   const [detailed, setDetailed] = useState(null);
+
   return (
     <ProductContext.Provider
       value={{

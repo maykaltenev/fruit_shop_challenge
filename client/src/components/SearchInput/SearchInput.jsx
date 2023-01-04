@@ -4,6 +4,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 // MaterialUI Components
 import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 // Context
 import { ProductContext } from "../Context/ProductContext.jsx";
 
@@ -14,6 +16,7 @@ import { getProduct } from "../../hooks/fetcher/getProducts";
 export default function SearchInput() {
   const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+
   const { detailed, setDetailed } = useContext(ProductContext);
   const navigate = useNavigate();
 
@@ -48,6 +51,10 @@ export default function SearchInput() {
     };
     fetchProduct(value);
   };
+  const handleClear = () => {
+    setSuggestions([]);
+    setSearchText("");
+  };
 
   return (
     <div>
@@ -59,7 +66,15 @@ export default function SearchInput() {
           </MenuItem>
         ))}
       </ul>
-      <button onClick={() => setSuggestions([])}>Clear Suggestions</button>
+      {searchText !== "" && (
+        <Button
+          variant="outlined"
+          startIcon={<DeleteIcon />}
+          onClick={handleClear}
+        >
+          Clear
+        </Button>
+      )}
     </div>
   );
 }

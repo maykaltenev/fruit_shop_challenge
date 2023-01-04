@@ -11,16 +11,16 @@ import ComplexCard from "./components/ComplexCard/ComplexCard";
 import SearchInput from "./components/SearchInput/SearchInput";
 import NavTabs from "./components/NavTabs/NavTabs";
 import DetailedPage from './components/DetailedPage/DetailedPage.jsx'
+import Home from "./components/Home/Home";
 
 function App() {
   const { product, result } = useContext(ProductContext);
 
   return (
     <div>
-      <SearchInput />
-      <NavTabs />
-      <List />
-      <Routes>
+      <Home />
+      <Routes >
+        <Route path="/" element={< Home />} />
         <Route path="/list" element={<Card />} />
         <Route path="/tabs" element={result?.map((item, i) => <ComplexCard key={i} product={item} />)} />
         < Route path="/product/:name" element={<DetailedPage />} />

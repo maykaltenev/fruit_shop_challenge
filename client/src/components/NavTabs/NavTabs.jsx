@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 
 //Import MaterialUI
 import Tabs from "@mui/material/Tabs";
@@ -23,6 +23,7 @@ export default function NavTabs() {
     setProduct,
     product,
   } = useContext(ProductContext);
+  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
@@ -45,31 +46,52 @@ export default function NavTabs() {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      if (category !== 0 && category !== undefined) {
-        setTimeout(async () => {
-          const aCategory = await getACategory(category);
-          const found = aCategory?.map(
-            (item) => `https://api.predic8.de:443${item?.product_url}`
-          );
-          const productResult = await getProducts(found);
-          setResult(productResult);
-        }, 2000);
-      } else {
-        setTimeout(async () => {
-          const found = allCategory
-            ?.map((item) =>
-              item?.products?.map(
-                (item) => `https://api.predic8.de:443${item?.product_url}`
-              )
-            )
-            .flat();
-          const productResult = await getProducts(found);
-          setResult(productResult);
-        }, 1000);
+      try {
+        if (category !== 0 && category !== undefined) {
+          setTimeout(async () => {
+            try {
+              const aCategory = await getACategory(category);
+              console.log(aCategory);
+              if (aCategory) {
+                const found = aCategory?.map(
+                  (item) => `https://api.predic8.de:443${item?.product_url}`
+                );
+                const productResult = await getProducts(found);
+                setResult(productResult);
+              } else {
+                throw "Error fetching products";
+              }
+            } catch (error) {
+              setIsError(true);
+            }
+          }, 2000);
+        } else {
+          setTimeout(async () => {
+            try {
+              const found = allCategory
+                ?.map((item) =>
+                  item?.products?.map(
+                    (item) => `https://api.predic8.de:443${item?.product_url}`
+                  )
+                )
+                .flat();
+              if (found) {
+                const productResult = await getProducts(found);
+                setResult(productResult);
+              } else {
+                throw "Error fetching all products";
+              }
+            } catch (error) {
+              setIsError(true);
+            }
+          }, 1000);
+        }
+      } catch (error) {
+        setIsError(true);
       }
     };
     fetchProduct();
-  }, [category]);
+  }, [category, isError]);
 
   return (
     <Box sx={{ width: "100%" }}>
