@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import { getSuggestions } from "../../hooks/fetcher/getSuggestion";
-
+import { getProduct } from "../../hooks/fetcher/getProducts";
 export default function SearchInput() {
   const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-
+  const [chosen, setChosen] = useState("");
   const handleChange = (e) => {
     setSearchText(e.target.value);
     if (searchText === "") {
@@ -27,9 +27,16 @@ export default function SearchInput() {
       0,
       e.target.innerHTML.indexOf("<")
     );
-    console.log(value);
+    setChosen(value);
   };
-
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const found = suggestions?.find((item) => item?.name === chosen);
+      const result = await getProduct(found?.product_url);
+      console.log(result);
+    };
+    fetchProduct();
+  }, [chosen]);
   return (
     <div>
       <input type="text" value={searchText} onChange={handleChange} />
