@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div>
-      < Home />
+
       <Routes >
         <Route path="/" element={< Home />} />
         <Route path="/list" element={<Card />} />

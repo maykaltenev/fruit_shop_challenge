@@ -13,6 +13,7 @@ import { getACategory } from "../../hooks/fetcher/getCategory";
 //Import Context
 import { ProductContext } from "../Context/ProductContext.jsx";
 import ComplexCard from "../ComplexCard/ComplexCard";
+
 export default function NavTabs() {
   const {
     allCategory,
@@ -21,8 +22,6 @@ export default function NavTabs() {
     setResult,
     setCategory,
     setProduct,
-    result,
-    product,
   } = useContext(ProductContext);
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
@@ -47,56 +46,50 @@ export default function NavTabs() {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      try {
-        if (category !== 0 && category !== undefined) {
-          setTimeout(async () => {
-            try {
-              const aCategory = await getACategory(category);
+      let result;
+      let counter = 0;
+      const maxAttempts = 99;
+      do {
+        try {
+          if (category !== 0 && category !== undefined) {
+            const aCategory = await getACategory(category);
 
-              if (aCategory) {
-                const found = aCategory?.map(
+            if (aCategory) {
+              const found = aCategory?.map(
+                (item) => `https://api.predic8.de:443${item?.product_url}`
+              );
+              result = await getProducts(found);
+              setResult(result);
+            } else {
+              throw "Error fetching products";
+            }
+          } else {
+            const found = allCategory
+              ?.map((item) =>
+                item?.products?.map(
                   (item) => `https://api.predic8.de:443${item?.product_url}`
-                );
-                const productResult = await getProducts(found);
-                setResult(productResult);
-              } else {
-                throw "Error fetching products";
-              }
-            } catch (error) {
-              setIsError(true);
-            }
-          }, 2000);
-        } else {
-          setTimeout(async () => {
-            try {
-              const found = allCategory
-                ?.map((item) =>
-                  item?.products?.map(
-                    (item) => `https://api.predic8.de:443${item?.product_url}`
-                  )
                 )
-                .flat();
-              if (found) {
-                const productResult = await getProducts(found);
-                setResult(productResult);
-              } else {
-                throw "Error fetching all products";
-              }
-            } catch (error) {
-              setIsError(true);
+              )
+              .flat();
+            if (found) {
+              result = await getProducts(found);
+              setResult(result);
+            } else {
+              throw "Error fetching all products";
             }
-          }, 1000);
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        setIsError(true);
-      }
+        counter++;
+      } while (result === undefined && counter < maxAttempts);
     };
     fetchProduct();
-  }, [category, isError]);
+  }, [category]);
 
   return (
     <Box sx={{ width: "100%" }}>
-      {allCategory && (
+      {allCategory ? (
         <Tabs
           onChange={handleChange}
           value={category}
@@ -109,6 +102,8 @@ export default function NavTabs() {
             <Tab key={i} label={allCategory?.name} value={allCategory?.name} />
           ))}
         </Tabs>
+      ) : (
+        "Loading..."
       )}
     </Box>
   );

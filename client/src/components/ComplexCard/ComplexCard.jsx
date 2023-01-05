@@ -37,30 +37,32 @@ export default function ComplexCard({ product }) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
   const handleClick = (e) => {
     console.log(data);
     const value = e.target.value;
     console.log(value);
     const fetchProduct = async (value) => {
-      console.log("insideFetch", value);
-      try {
-        const found = data?.find((item) => item?.name === value);
-        console.log("found", found);
-        const result = await getProduct(found?.product_url);
-        console.log("result", result);
-        if (result !== undefined) {
-          setDetailed(result);
-          localStorage.setItem("productName", JSON.stringify(result));
-          navigate(`/product/${result?.name}`);
-        } else {
-          throw console.error("Value is undefined");
+      let result;
+      let found;
+      do {
+        try {
+          found = data?.find((item) => item?.name === value);
+          console.log("found", found);
+          result = await getProduct(found?.product_url);
+          console.log("result", result);
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(error);
-      }
+      } while (result === undefined);
+      console.log("test fauls", result);
+      setDetailed(result);
+      localStorage.setItem("productName", JSON.stringify(result));
+      navigate(`/product/${result?.name}`);
     };
     fetchProduct(value);
   };
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader

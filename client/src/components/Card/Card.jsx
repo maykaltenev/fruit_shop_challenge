@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+
 import { CardActionArea } from "@mui/material";
 import { ProductContext } from "../Context/ProductContext";
 
