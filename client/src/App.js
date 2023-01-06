@@ -13,6 +13,7 @@ import NavTabs from "./components/NavTabs/NavTabs";
 import DetailedPage from './components/DetailedPage/DetailedPage.jsx'
 import Home from "./components/Home/Home";
 import CategoryCard from "./components/CategoryCard/CategoryCard";
+import ActionAreaCard from "./components/Card/Card";
 function App() {
   const { product, result } = useContext(ProductContext);
 
@@ -21,7 +22,7 @@ function App() {
       <Home />
       <Routes >
         <Route path="/" element={<Home />} />
-        <Route path="/list" element={<Card />} />
+        <Route path="/list" element={<ActionAreaCard />} />
         <Route path="/tabs" element={<CategoryCard />} />
         <Route path="/product/:name" element={<DetailedPage />} />
       </Routes>

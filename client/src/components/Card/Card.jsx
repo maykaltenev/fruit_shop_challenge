@@ -13,6 +13,7 @@ import { ProductContext } from "../Context/ProductContext";
 
 export default function ActionAreaCard() {
   const { product } = useContext(ProductContext);
+  console.log(product);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>

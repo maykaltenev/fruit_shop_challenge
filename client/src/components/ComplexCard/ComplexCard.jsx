@@ -75,6 +75,7 @@ export default function ComplexCard({ product }) {
                 store: store?.name,
               };
             });
+            handleExpandClick();
             localStorage.setItem("productName", JSON.stringify(detailed));
             navigate(`/product/${result?.name}`);
           } else {
@@ -118,21 +119,16 @@ export default function ComplexCard({ product }) {
         <IconButton
           aria-label="add to favorites"
           onClick={handleClick}
-          value={product.name}
+          value={product?.name}
         >
-          Show more
+          Show details
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+
         <ExpandMore
           expand={expanded}
-          onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
+        ></ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
