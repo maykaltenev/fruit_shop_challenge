@@ -19,9 +19,10 @@ export default function ActionAreaCard() {
         <CardMedia
           component="img"
           height="140"
-          image={`https://api.predic8.de:443${product?.photo_url}`}
           alt={product?.name}
+          image={`https://api.predic8.de${product?.photo_url}`}
         />
+
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {product?.name}

@@ -37,10 +37,27 @@ const List = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const found = data?.find((item) => item?.name === select);
-      const result = await getProduct(found?.product_url);
+      let result;
+      let counter = 0;
+      const maxAttempts = 99;
+      do {
+        try {
+          const found = data?.find((item) => item?.name === select);
+          console.log("found", found);
+          result = await getProduct(found?.product_url);
+          if (result !== undefined) {
+            setProduct(result);
+            localStorage.setItem("productName", JSON.stringify(result));
+          } else {
+            throw "Error fetching products";
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        counter++;
+      } while (result === undefined && counter < maxAttempts);
+
       console.log(result);
-      setProduct(result);
     };
     fetchProduct();
   }, [select]);

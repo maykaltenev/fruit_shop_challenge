@@ -19,7 +19,6 @@ export const getProduct = (productUrl) => {
 };
 
 export const getProducts = (productUrl) => {
-  console.log("getProducts", productUrl);
   if (productUrl === undefined || productUrl === null) {
     return;
   }

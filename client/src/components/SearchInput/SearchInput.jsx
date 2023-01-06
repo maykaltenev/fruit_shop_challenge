@@ -42,13 +42,25 @@ export default function SearchInput() {
       e.target.innerHTML.indexOf("<")
     );
     const fetchProduct = async (value) => {
-      const found = suggestions?.find((item) => item?.name === value);
-      const result = await getProduct(found?.product_url);
-      setDetailed(result);
-      localStorage.setItem("productName", JSON.stringify(result));
-      navigate(`/product/${result?.name}`);
-      setSearchText("");
-      setSuggestions([]);
+      let result;
+      let counter = 0;
+      const maxAttempts = 99;
+      do {
+        try {
+          const found = suggestions?.find((item) => item?.name === value);
+          result = await getProduct(found?.product_url);
+          if (result !== undefined) {
+            setDetailed(result);
+            localStorage.setItem("productName", JSON.stringify(result));
+            navigate(`/product/${result?.name}`);
+            setSearchText("");
+            setSuggestions([]);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        counter++;
+      } while (result === undefined && counter < maxAttempts);
     };
     fetchProduct(value);
   };

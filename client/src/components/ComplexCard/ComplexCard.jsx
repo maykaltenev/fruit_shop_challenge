@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -45,20 +45,28 @@ export default function ComplexCard({ product }) {
     const fetchProduct = async (value) => {
       let result;
       let found;
+      let counter = 0;
+      const maxAttempts = 99;
       do {
         try {
           found = data?.find((item) => item?.name === value);
           console.log("found", found);
+
           result = await getProduct(found?.product_url);
+          if (result !== undefined) {
+            setDetailed(result);
+            localStorage.setItem("productName", JSON.stringify(result));
+            navigate(`/product/${result?.name}`);
+          } else {
+            throw "Error result undefined";
+          }
           console.log("result", result);
         } catch (error) {
           console.error(error);
         }
-      } while (result === undefined);
+        counter++;
+      } while (result === undefined && counter < maxAttempts);
       console.log("test fauls", result);
-      setDetailed(result);
-      localStorage.setItem("productName", JSON.stringify(result));
-      navigate(`/product/${result?.name}`);
     };
     fetchProduct(value);
   };
