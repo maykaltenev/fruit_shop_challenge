@@ -107,3 +107,7 @@ If you choose to include other third party libraries, apart from the framework a
 - I can see the last 5 products I viewed the details for (e.g. in a sidebar)
 - The contents of my "recently viewed" list is persisted between page reloads
 - Local Storage is to be used
+
+Credit photo:
+
+- Alexander Schimmeck, https://unsplash.com/photos/2zJhA9RSkys

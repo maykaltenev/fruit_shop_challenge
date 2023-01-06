@@ -4,15 +4,17 @@ const ProductContextProvider = ({ children }) => {
   const [product, setProduct] = useState(null);
   const [allCategory, setAllCategory] = useState(0);
   const [category, setCategory] = useState(0);
+  const [detailedCategory, setDetailedCategory] = useState(null);
   const [result, setResult] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
   const [data, setData] = useState(null);
+
   const getAnswersFromLocalStorage = () => {
     const product = localStorage.getItem("productName");
     if (product) {
       return JSON.parse(localStorage.getItem("productName"));
     } else {
-      return "[]";
+      return { category: "", store: "" };
     }
   };
   const [detailed, setDetailed] = useState(getAnswersFromLocalStorage());
@@ -26,6 +28,8 @@ const ProductContextProvider = ({ children }) => {
         setProduct,
         category,
         setCategory,
+        detailedCategory,
+        setDetailedCategory,
         allCategory,
         setAllCategory,
         result,

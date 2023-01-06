@@ -10,15 +10,19 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { CardActionArea } from "@mui/material";
-
-import { getProduct } from "../../hooks/fetcher/getProducts";
-import { ProductContext } from "../Context/ProductContext.jsx";
+// Routing
 import { useNavigate } from "react-router-dom";
+// Fetching Products
+import { getProduct } from "../../hooks/fetcher/getProducts";
+import { getStore } from "../../hooks/fetcher/getStore";
+import { getSubstring } from "../../hooks/helper/getSubstring";
+// ProductContext
+import { ProductContext } from "../Context/ProductContext.jsx";
+
 export const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -32,7 +36,14 @@ export const ExpandMore = styled((props) => {
 
 export default function ComplexCard({ product }) {
   const [expanded, setExpanded] = useState(false);
-  const { data, setData, setDetailed } = useContext(ProductContext);
+  const {
+    data,
+    setData,
+    setDetailed,
+    setDetailedCategory,
+    detailed,
+    detailedCategory,
+  } = useContext(ProductContext);
   const navigate = useNavigate();
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -50,23 +61,30 @@ export default function ComplexCard({ product }) {
       do {
         try {
           found = data?.find((item) => item?.name === value);
-          console.log("found", found);
-
           result = await getProduct(found?.product_url);
           if (result !== undefined) {
-            setDetailed(result);
-            localStorage.setItem("productName", JSON.stringify(result));
+            let category = getSubstring(result?.category_url);
+            let store = await getStore(result?.vendor_url);
+            console.log(result);
+            console.log(category);
+            console.log(store.name);
+            setDetailed((detailed) => {
+              return {
+                ...result,
+                category: category,
+                store: store?.name,
+              };
+            });
+            localStorage.setItem("productName", JSON.stringify(detailed));
             navigate(`/product/${result?.name}`);
           } else {
             throw "Error result undefined";
           }
-          console.log("result", result);
         } catch (error) {
           console.error(error);
         }
         counter++;
       } while (result === undefined && counter < maxAttempts);
-      console.log("test fauls", result);
     };
     fetchProduct(value);
   };
@@ -118,8 +136,8 @@ export default function ComplexCard({ product }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Category:</Typography>
-          <Typography paragraph></Typography>
+          <Typography paragraph>Category: {product?.category}</Typography>
+          <Typography paragraph>Store: {product?.store}</Typography>
           <Typography paragraph></Typography>
           <Typography paragraph></Typography>
           <Typography></Typography>
