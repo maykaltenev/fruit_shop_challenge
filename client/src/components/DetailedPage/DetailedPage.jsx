@@ -8,7 +8,7 @@ export default function DetailedPage() {
   const { store } = useParams();
   return (
     <div>
-      <ComplexCard product={detailed} store={store} />
+      <ComplexCard product={detailed} store={store} name={"searchInput"} />
     </div>
   );
 }

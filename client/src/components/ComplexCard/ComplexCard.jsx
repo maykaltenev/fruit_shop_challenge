@@ -34,9 +34,9 @@ export const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function ComplexCard({ product, store }) {
+export default function ComplexCard({ product, store, name }) {
   const [expanded, setExpanded] = useState(false);
-  const { data, setDetailed, detailed } = useContext(ProductContext);
+  const { data, result, setDetailed, detailed } = useContext(ProductContext);
   const navigate = useNavigate();
 
   const handleExpandClick = () => {
@@ -44,52 +44,28 @@ export default function ComplexCard({ product, store }) {
   };
 
   const handleClick = (e) => {
-    console.log(data);
     const value = e.target.value;
+    console.log(detailed);
     console.log(value);
-    //   const fetchProduct = async (value) => {
-    //     let result;
-    //     let found;
-    //     let counter = 0;
-    //     const maxAttempts = 99;
-    //     do {
-    //       try {
-    //         found = data?.find((item) => item?.name === value);
-    //         result = await getProduct(found?.product_url);
-    //         if (result !== undefined) {
-    //           let category = getSubstring(result?.category_url);
-    //           let store = await getStore(result?.vendor_url);
-    //           console.log(result);
-    //           console.log(category);
-    //           console.log(store.name);
+    console.log("click", result);
+    if (name === "category") {
+      let found = result?.find((item) => item?.name === value);
+      console.log("found", found);
+      setDetailed(found);
+      handleExpandClick();
+      localStorage.setItem("productName", JSON.stringify(found));
+      navigate(`/product/${found?.name}/${found?.store}`);
+    } else if (name === "searchInput") {
+      handleExpandClick();
+      localStorage.setItem("productName", JSON.stringify(detailed));
+      navigate(`/product/${detailed?.name}/${detailed?.store}`);
+    }
 
-    //           setDetailed((detailed) => {
-    //             return {
-    //               ...result,
-    //               category: category,
-    //               store: store?.name,
-    //             };
-    //           });
-    //           handleExpandClick();
-    //           localStorage.setItem("productName", JSON.stringify(detailed));
-
-    //           navigate(`/product/${result?.name}`);
-    //         } else {
-    //           throw "Error result undefined";
-    //         }
-    //       } catch (error) {
-    //         console.error(error);
-    //       }
-    //       counter++;
-    //     } while (result === undefined && counter < maxAttempts);
-    //   };
-    //   fetchProduct(value);
-    // };
-
-    handleExpandClick();
-    localStorage.setItem("productName", JSON.stringify(detailed));
-    navigate(`/product/${detailed?.name}/${detailed?.store}`);
+    // handleExpandClick();
+    // localStorage.setItem("productName", JSON.stringify(detailed));
+    // navigate(`/product/${detailed?.name}/${detailed?.store}`);
   };
+
   useEffect(() => {
     if (store) {
       setExpanded(true);

@@ -5,20 +5,28 @@ const ProductContextProvider = ({ children }) => {
   const [allCategory, setAllCategory] = useState(0);
   const [category, setCategory] = useState(0);
   const [detailedCategory, setDetailedCategory] = useState(null);
-  const [result, setResult] = useState(null);
+
   const [suggestions, setSuggestions] = useState([]);
   const [data, setData] = useState(null);
 
-  const getAnswersFromLocalStorage = () => {
+  const getProductFromLocalStorage = () => {
     const product = localStorage.getItem("productName");
     if (product) {
       return JSON.parse(localStorage.getItem("productName"));
     } else {
-      return { category: "", store: "" };
+      return {};
     }
   };
-  const [detailed, setDetailed] = useState(getAnswersFromLocalStorage());
-
+  const getResultProductFromLocalStorage = () => {
+    const result = localStorage.getItem("result");
+    if (result) {
+      return JSON.parse(localStorage.getItem("result"));
+    } else {
+      return [];
+    }
+  };
+  const [detailed, setDetailed] = useState(getProductFromLocalStorage());
+  const [result, setResult] = useState(getResultProductFromLocalStorage);
   return (
     <ProductContext.Provider
       value={{

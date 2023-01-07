@@ -12,11 +12,11 @@ import { CardActionArea } from "@mui/material";
 import { ProductContext } from "../Context/ProductContext";
 import ComplexCard from "../ComplexCard/ComplexCard";
 export default function ActionAreaCard() {
-  const { product } = useContext(ProductContext);
-  console.log(product);
+  const { result } = useContext(ProductContext);
+
   return (
     <div>
-      <ComplexCard product={product} />
+      <ComplexCard product={result} />
     </div>
   );
 }
