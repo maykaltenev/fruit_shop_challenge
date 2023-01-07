@@ -11,11 +11,12 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
+import { getStore } from "../../hooks/fetcher/getStore";
+import { getSubstring } from "../../hooks/helper/getSubstring";
 // Import Context
 import { ProductContext } from "../Context/ProductContext.jsx";
 const List = () => {
-  const { data, setData, product, setProduct, setResult } =
+  const { data, setData, product, setProduct, setResult, setDetailed } =
     useContext(ProductContext);
 
   const [select, setSelected] = useState("");
@@ -46,7 +47,16 @@ const List = () => {
           console.log("found", found);
           result = await getProduct(found?.product_url);
           if (result !== undefined) {
-            setProduct(result);
+            let category = getSubstring(result?.category_url);
+            let store = await getStore(result?.vendor_url);
+            setDetailed((detailed) => {
+              return {
+                ...result,
+                category: category,
+                store: store?.name,
+              };
+            });
+            navigate(`/product/${result?.name}`);
           } else {
             throw "Error fetching products";
           }

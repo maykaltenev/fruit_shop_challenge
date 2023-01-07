@@ -45,9 +45,7 @@ export default function ComplexCard({ product, store, name }) {
 
   const handleClick = (e) => {
     const value = e.target.value;
-    console.log(detailed);
-    console.log(value);
-    console.log("click", result);
+    console.log(name);
     if (name === "category") {
       let found = result?.find((item) => item?.name === value);
       console.log("found", found);
