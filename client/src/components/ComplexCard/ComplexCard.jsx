@@ -14,6 +14,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { CardActionArea } from "@mui/material";
+
 // Routing
 import { useNavigate, useParams } from "react-router-dom";
 // Fetching Products
@@ -61,10 +62,6 @@ export default function ComplexCard({ product, store, name }) {
       localStorage.setItem("productName", JSON.stringify(detailed));
       navigate(`/product/${detailed?.name}/${detailed?.store}`);
     }
-
-    // handleExpandClick();
-    // localStorage.setItem("productName", JSON.stringify(detailed));
-    // navigate(`/product/${detailed?.name}/${detailed?.store}`);
   };
   const updateRecently = (newValue) => {
     setRecently((recently) => {
@@ -116,6 +113,7 @@ export default function ComplexCard({ product, store, name }) {
           onClick={handleClick}
           aria-label="add to favorites"
           value={product?.name}
+          sx={name === "recently" ? { fontSize: 12 } : { fontSize: 20 }}
         >
           Show details
         </IconButton>

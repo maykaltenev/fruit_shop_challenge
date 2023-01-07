@@ -14,12 +14,14 @@ import DetailedPage from './components/DetailedPage/DetailedPage.jsx'
 import Home from "./components/Home/Home";
 import CategoryCard from "./components/CategoryCard/CategoryCard";
 import ActionAreaCard from "./components/Card/Card";
+import RecentlyViewed from "./components/RecentlyViewed/RecentlyViewed";
 function App() {
   const { product, result } = useContext(ProductContext);
 
   return (
     <div>
       <Home />
+      <RecentlyViewed />
       <Routes >
         <Route path="/" element={<Home />} />
         <Route path="/list" element={<ActionAreaCard />} />
