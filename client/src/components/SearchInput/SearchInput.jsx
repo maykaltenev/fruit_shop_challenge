@@ -12,6 +12,8 @@ import { ProductContext } from "../Context/ProductContext.jsx";
 // Fetchers
 import { getSuggestions } from "../../hooks/fetcher/getSuggestion";
 import { getProduct } from "../../hooks/fetcher/getProducts";
+import { getStore } from "../../hooks/fetcher/getStore";
+import { getSubstring } from "../../hooks/helper/getSubstring";
 
 export default function SearchInput() {
   const [searchText, setSearchText] = useState("");
@@ -19,6 +21,7 @@ export default function SearchInput() {
   const { detailed, setDetailed, suggestions, setSuggestions } =
     useContext(ProductContext);
   const navigate = useNavigate();
+  let { name } = useParams();
 
   const handleChange = (e) => {
     setSearchText(e.target.value);
@@ -45,13 +48,21 @@ export default function SearchInput() {
       let result;
       let counter = 0;
       const maxAttempts = 99;
+
       do {
         try {
           const found = suggestions?.find((item) => item?.name === value);
           result = await getProduct(found?.product_url);
           if (result !== undefined) {
-            setDetailed(result);
-            localStorage.setItem("productName", JSON.stringify(result));
+            let category = getSubstring(result?.category_url);
+            let store = await getStore(result?.vendor_url);
+            setDetailed((detailed) => {
+              return {
+                ...result,
+                category: category,
+                store: store?.name,
+              };
+            });
             navigate(`/product/${result?.name}`);
             setSearchText("");
             setSuggestions([]);

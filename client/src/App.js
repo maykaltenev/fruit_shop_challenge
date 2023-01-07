@@ -24,7 +24,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/list" element={<ActionAreaCard />} />
         <Route path="/tabs" element={<CategoryCard />} />
+        {/* <Route path="/product/:name" element={<CategoryCard />} /> */}
         <Route path="/product/:name" element={<DetailedPage />} />
+        <Route path="/product/:name/:store" element={<DetailedPage />} />
       </Routes>
 
 

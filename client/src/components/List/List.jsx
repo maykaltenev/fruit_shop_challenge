@@ -47,7 +47,6 @@ const List = () => {
           result = await getProduct(found?.product_url);
           if (result !== undefined) {
             setProduct(result);
-            localStorage.setItem("productName", JSON.stringify(result));
           } else {
             throw "Error fetching products";
           }

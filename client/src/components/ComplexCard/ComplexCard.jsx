@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -15,7 +15,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { CardActionArea } from "@mui/material";
 // Routing
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // Fetching Products
 import { getProduct } from "../../hooks/fetcher/getProducts";
 import { getStore } from "../../hooks/fetcher/getStore";
@@ -34,17 +34,11 @@ export const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function ComplexCard({ product }) {
+export default function ComplexCard({ product, store }) {
   const [expanded, setExpanded] = useState(false);
-  const {
-    data,
-    setData,
-    setDetailed,
-    setDetailedCategory,
-    detailed,
-    detailedCategory,
-  } = useContext(ProductContext);
+  const { data, setDetailed, detailed } = useContext(ProductContext);
   const navigate = useNavigate();
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -53,49 +47,63 @@ export default function ComplexCard({ product }) {
     console.log(data);
     const value = e.target.value;
     console.log(value);
-    const fetchProduct = async (value) => {
-      let result;
-      let found;
-      let counter = 0;
-      const maxAttempts = 99;
-      do {
-        try {
-          found = data?.find((item) => item?.name === value);
-          result = await getProduct(found?.product_url);
-          if (result !== undefined) {
-            let category = getSubstring(result?.category_url);
-            let store = await getStore(result?.vendor_url);
-            console.log(result);
-            console.log(category);
-            console.log(store.name);
-            setDetailed((detailed) => {
-              return {
-                ...result,
-                category: category,
-                store: store?.name,
-              };
-            });
-            handleExpandClick();
-            localStorage.setItem("productName", JSON.stringify(detailed));
-            navigate(`/product/${result?.name}`);
-          } else {
-            throw "Error result undefined";
-          }
-        } catch (error) {
-          console.error(error);
-        }
-        counter++;
-      } while (result === undefined && counter < maxAttempts);
-    };
-    fetchProduct(value);
+    //   const fetchProduct = async (value) => {
+    //     let result;
+    //     let found;
+    //     let counter = 0;
+    //     const maxAttempts = 99;
+    //     do {
+    //       try {
+    //         found = data?.find((item) => item?.name === value);
+    //         result = await getProduct(found?.product_url);
+    //         if (result !== undefined) {
+    //           let category = getSubstring(result?.category_url);
+    //           let store = await getStore(result?.vendor_url);
+    //           console.log(result);
+    //           console.log(category);
+    //           console.log(store.name);
+
+    //           setDetailed((detailed) => {
+    //             return {
+    //               ...result,
+    //               category: category,
+    //               store: store?.name,
+    //             };
+    //           });
+    //           handleExpandClick();
+    //           localStorage.setItem("productName", JSON.stringify(detailed));
+
+    //           navigate(`/product/${result?.name}`);
+    //         } else {
+    //           throw "Error result undefined";
+    //         }
+    //       } catch (error) {
+    //         console.error(error);
+    //       }
+    //       counter++;
+    //     } while (result === undefined && counter < maxAttempts);
+    //   };
+    //   fetchProduct(value);
+    // };
+
+    handleExpandClick();
+    localStorage.setItem("productName", JSON.stringify(detailed));
+    navigate(`/product/${detailed?.name}/${detailed?.store}`);
   };
+  useEffect(() => {
+    if (store) {
+      setExpanded(true);
+    } else {
+      setExpanded(false);
+    }
+  }, [detailed]);
 
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ fontSize: 8, bgcolor: red[500] }} aria-label="recipe">
-            {product.name}
+            {product?.name}
           </Avatar>
         }
         action={
@@ -117,8 +125,8 @@ export default function ComplexCard({ product }) {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
-          aria-label="add to favorites"
           onClick={handleClick}
+          aria-label="add to favorites"
           value={product?.name}
         >
           Show details
@@ -134,9 +142,6 @@ export default function ComplexCard({ product }) {
         <CardContent>
           <Typography paragraph>Category: {product?.category}</Typography>
           <Typography paragraph>Store: {product?.store}</Typography>
-          <Typography paragraph></Typography>
-          <Typography paragraph></Typography>
-          <Typography></Typography>
         </CardContent>
       </Collapse>
     </Card>

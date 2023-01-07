@@ -10,29 +10,13 @@ import Stack from "@mui/material/Stack";
 
 import { CardActionArea } from "@mui/material";
 import { ProductContext } from "../Context/ProductContext";
-
+import ComplexCard from "../ComplexCard/ComplexCard";
 export default function ActionAreaCard() {
   const { product } = useContext(ProductContext);
   console.log(product);
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          alt={product?.name}
-          image={`https://api.predic8.de${product?.photo_url}`}
-        />
-
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {product?.name}
-            <Stack direction="row" spacing={1}>
-              <Chip label={product?.price + "€"} />
-            </Stack>
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <div>
+      <ComplexCard product={product} />
+    </div>
   );
 }
