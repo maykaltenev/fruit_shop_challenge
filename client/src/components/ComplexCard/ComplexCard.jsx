@@ -61,6 +61,10 @@ export default function ComplexCard({ product, store, name }) {
       updateRecently(detailed);
       localStorage.setItem("productName", JSON.stringify(detailed));
       navigate(`/product/${detailed?.name}/${detailed?.store}`);
+    } else if (name === "recently") {
+      handleExpandClick();
+      navigate(`/product/${product?.name}/${product?.store}`);
+      updateRecently(product);
     }
   };
   const updateRecently = (newValue) => {

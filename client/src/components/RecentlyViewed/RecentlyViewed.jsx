@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import ComplexCard from "../ComplexCard/ComplexCard";
 import { ProductContext } from "../Context/ProductContext";
@@ -22,9 +22,17 @@ import Looks4Icon from "@mui/icons-material/Looks4";
 import Looks5Icon from "@mui/icons-material/Looks5";
 const drawerWidth = 220;
 export default function RecentlyViewed() {
-  const { recently } = useContext(ProductContext);
+  const { product, recently, setProduct } = useContext(ProductContext);
+  const [fromRecentFive, setFromRecentFive] = useState("");
   const { store } = useParams;
-  console.log(recently);
+
+  const handleChange = (e) => {
+    const name = e.target.getAttribute("name");
+
+    const found = recently?.find((item) => item?.name === name);
+    setFromRecentFive(found);
+  };
+  console.log(product);
   return (
     //  <h1>Recently viewed</h1>
     //   <Box display="flex" flexDirection="row">
@@ -51,6 +59,13 @@ export default function RecentlyViewed() {
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 2 }}
       >
         <Toolbar />
+        {fromRecentFive && (
+          <ComplexCard
+            product={fromRecentFive}
+            store={store}
+            name={"recently"}
+          />
+        )}
       </Box>
       <Drawer
         sx={{
@@ -69,26 +84,17 @@ export default function RecentlyViewed() {
 
         <Divider />
         <List>
+          <ListItem>
+            <ListItemText secondary={"Last 5 Viewed"} />
+          </ListItem>
           {recently?.map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index === 0 ? (
-                    <LooksOneIcon />
-                  ) : index === 1 ? (
-                    <LooksTwoIcon />
-                  ) : index === 2 ? (
-                    <Looks3Icon />
-                  ) : index === 3 ? (
-                    <Looks4Icon />
-                  ) : index === 4 ? (
-                    <Looks5Icon />
-                  ) : (
-                    ""
-                  )}
-                </ListItemIcon>
-                <ListItemText primary={item?.name} />
-              </ListItemButton>
+            <ListItem onClick={handleChange} key={index} disablePadding>
+              <div
+                name={item?.name}
+                style={{ width: "100%", cursor: "pointer" }}
+              >
+                {item?.name}
+              </div>
             </ListItem>
           ))}
         </List>

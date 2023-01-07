@@ -119,7 +119,7 @@ export default function NavTabs() {
   }, [category]);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "40%" }}>
       {allCategory ? (
         <Tabs
           onChange={handleChange}
