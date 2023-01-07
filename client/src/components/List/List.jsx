@@ -22,7 +22,6 @@ const List = () => {
   const [select, setSelected] = useState("");
   const navigate = useNavigate();
   const handleChange = (e) => {
-    console.log(e.target.value);
     setSelected(e.target.value);
     navigate("/list");
   };
@@ -30,7 +29,6 @@ const List = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getAllProducts();
-      console.log("response", response);
       setData(response);
     };
     fetchData();
@@ -44,7 +42,6 @@ const List = () => {
       do {
         try {
           const found = data?.find((item) => item?.name === select);
-          console.log("found", found);
           result = await getProduct(found?.product_url);
           if (result !== undefined) {
             let category = getSubstring(result?.category_url);

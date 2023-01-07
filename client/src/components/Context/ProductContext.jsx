@@ -25,8 +25,17 @@ const ProductContextProvider = ({ children }) => {
       return [];
     }
   };
+  const getRecentlyViewed = () => {
+    const recently = localStorage.getItem("recently");
+    if (recently) {
+      return JSON.parse(localStorage.getItem("recently"));
+    } else {
+      return [];
+    }
+  };
+  const [recently, setRecently] = useState(getRecentlyViewed());
   const [detailed, setDetailed] = useState(getProductFromLocalStorage());
-  const [result, setResult] = useState(getResultProductFromLocalStorage);
+  const [result, setResult] = useState(getResultProductFromLocalStorage());
   return (
     <ProductContext.Provider
       value={{
@@ -46,6 +55,8 @@ const ProductContextProvider = ({ children }) => {
         setDetailed,
         data,
         setData,
+        recently,
+        setRecently,
       }}
     >
       {children}

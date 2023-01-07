@@ -18,10 +18,9 @@ import { getSubstring } from "../../hooks/helper/getSubstring";
 export default function SearchInput() {
   const [searchText, setSearchText] = useState("");
 
-  const { detailed, setDetailed, suggestions, setSuggestions } =
+  const { setDetailed, suggestions, setSuggestions } =
     useContext(ProductContext);
   const navigate = useNavigate();
-  let { name } = useParams();
 
   const handleChange = (e) => {
     setSearchText(e.target.value);
@@ -33,7 +32,6 @@ export default function SearchInput() {
       setSuggestions([]);
     } else {
       getSuggestions(e.target.value).then((response) => {
-        console.log(response);
         setSuggestions(response);
       });
     }

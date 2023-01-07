@@ -36,7 +36,8 @@ export const ExpandMore = styled((props) => {
 
 export default function ComplexCard({ product, store, name }) {
   const [expanded, setExpanded] = useState(false);
-  const { data, result, setDetailed, detailed } = useContext(ProductContext);
+  const { data, result, setDetailed, detailed, recently, setRecently } =
+    useContext(ProductContext);
   const navigate = useNavigate();
 
   const handleExpandClick = () => {
@@ -45,16 +46,18 @@ export default function ComplexCard({ product, store, name }) {
 
   const handleClick = (e) => {
     const value = e.target.value;
-    console.log(name);
+
     if (name === "category") {
       let found = result?.find((item) => item?.name === value);
-      console.log("found", found);
+
       setDetailed(found);
       handleExpandClick();
+      updateRecently(found);
       localStorage.setItem("productName", JSON.stringify(found));
       navigate(`/product/${found?.name}/${found?.store}`);
     } else if (name === "searchInput") {
       handleExpandClick();
+      updateRecently(detailed);
       localStorage.setItem("productName", JSON.stringify(detailed));
       navigate(`/product/${detailed?.name}/${detailed?.store}`);
     }
@@ -62,6 +65,17 @@ export default function ComplexCard({ product, store, name }) {
     // handleExpandClick();
     // localStorage.setItem("productName", JSON.stringify(detailed));
     // navigate(`/product/${detailed?.name}/${detailed?.store}`);
+  };
+  const updateRecently = (newValue) => {
+    setRecently((recently) => {
+      const updatedRecently = [newValue, ...recently];
+      console.log(updatedRecently);
+      if (updatedRecently.length > 5) {
+        updatedRecently.pop();
+      }
+      localStorage.setItem("recently", JSON.stringify(updatedRecently));
+      return updatedRecently;
+    });
   };
 
   useEffect(() => {

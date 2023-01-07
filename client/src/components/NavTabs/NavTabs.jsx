@@ -33,7 +33,6 @@ export default function NavTabs() {
   const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
-    console.log("value", newValue);
     setCategory(newValue);
     setProduct(null);
     navigate("/tabs");
@@ -74,7 +73,6 @@ export default function NavTabs() {
                     return { ...item, category, store };
                   })
                 );
-                console.log(resolvedValues);
                 localStorage.setItem("result", JSON.stringify(resolvedValues));
                 setResult(resolvedValues);
               } else {
@@ -118,7 +116,6 @@ export default function NavTabs() {
       } while (result === undefined && counter < maxAttempts);
     };
     fetchProduct();
-    console.log(result);
   }, [category]);
 
   return (

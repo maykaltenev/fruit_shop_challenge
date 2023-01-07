@@ -15,7 +15,6 @@ export const getAllCategories = () => {
 };
 
 export const getACategory = (category) => {
-  console.log("found", category);
   return axios
     .get(`https://api.predic8.de/shop/categories/${category}`)
     .then((data) => data?.data?.products)
