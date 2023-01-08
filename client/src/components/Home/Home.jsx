@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <Box
       sx={{
-        width: "80%",
+        width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-evenly",

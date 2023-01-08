@@ -20,12 +20,10 @@ export default function NavTabs() {
     allCategory,
     setAllCategory,
     category,
-    result,
+
     setResult,
     setCategory,
     setProduct,
-    setDetailed,
-    detailed,
   } = useContext(ProductContext);
   const [valueCategoryTab, setValueCategoryTab] = useState("0");
   const navigate = useNavigate();
@@ -58,8 +56,8 @@ export default function NavTabs() {
       do {
         try {
           if (category !== undefined) {
-            const found = allCategory.find((item) => item?.name === category);
-            const foundIndex = allCategory.findIndex((item) => item === found);
+            const found = allCategory?.find((item) => item?.name === category);
+            const foundIndex = allCategory?.findIndex((item) => item === found);
             setValueCategoryTab(foundIndex);
             const aCategory = await getACategory(category);
             let tabProducts;
@@ -72,7 +70,8 @@ export default function NavTabs() {
                 (item) => `https://api.predic8.de:443${item?.product_url}`
               );
             }
-            result = await getProducts(found);
+
+            result = await getProducts(tabProducts);
             if (result !== undefined) {
               let resolvedValues = await Promise.all(
                 result.map(async (item) => {
@@ -99,7 +98,7 @@ export default function NavTabs() {
   }, [category]);
 
   return (
-    <Box sx={{ width: "70%" }}>
+    <Box sx={{ width: "50%" }}>
       {allCategory ? (
         <Tabs
           onChange={handleChange}

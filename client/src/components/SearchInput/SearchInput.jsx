@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 
 // Routes
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // MaterialUI Components
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";

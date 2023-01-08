@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ComplexCard from "../ComplexCard/ComplexCard";
 import { ProductContext } from "../Context/ProductContext";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -9,11 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import ViewedCard from "../ViewedCard/ViewedCard";
+
 import HistoryIcon from "@mui/icons-material/History";
 import Looks5Icon from "@mui/icons-material/Looks5";
 import Home from "../Home/Home";
@@ -71,7 +66,7 @@ export default function RecentlyViewed() {
       >
         <Toolbar />
 
-        <Typography sx={{ fontSize: 27 }} variant="h6" noWrap component="div">
+        <Typography sx={{ fontSize: 25 }} variant="h6" noWrap component="div">
           Fruit Shop
         </Typography>
         <Divider />

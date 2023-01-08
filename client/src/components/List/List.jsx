@@ -16,8 +16,7 @@ import { getSubstring } from "../../hooks/helper/getSubstring";
 // Import Context
 import { ProductContext } from "../Context/ProductContext.jsx";
 const List = () => {
-  const { data, setData, product, setProduct, setResult, setDetailed } =
-    useContext(ProductContext);
+  const { data, setData, setDetailed } = useContext(ProductContext);
 
   const [select, setSelected] = useState("");
   const navigate = useNavigate();
@@ -71,7 +70,7 @@ const List = () => {
   return (
     <div>
       {data && (
-        <Box sx={{ marginY: 2, minWidth: 150 }}>
+        <Box sx={{ marginY: 2, minWidth: 130 }}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Fruit</InputLabel>
             <Select
