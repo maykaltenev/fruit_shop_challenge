@@ -71,7 +71,7 @@ const List = () => {
   return (
     <div>
       {data && (
-        <Box sx={{ marginY: 2, minWidth: 150 }} fullWidth>
+        <Box sx={{ marginY: 2, minWidth: 150 }}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Fruit</InputLabel>
             <Select

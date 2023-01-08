@@ -24,9 +24,9 @@ function App() {
       <RecentlyViewed />
       <Routes >
         <Route path="/" />
-        < Route path="/list" element={<ActionAreaCard />} />
+        <Route path="/list" element={<ActionAreaCard />} />
         <Route path="/tabs" element={<CategoryCard />} />
-        <Route path="/viewed" element={<ViewedCard />} />
+        <Route path="/viewed/:name/:store" element={<ViewedCard />} />
         <Route path="/product/:name" element={<DetailedPage />} />
         <Route path="/product/:name/:store" element={<DetailedPage />} />
       </Routes>

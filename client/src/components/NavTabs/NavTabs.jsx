@@ -8,14 +8,12 @@ import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 //Import fetching categories and products
 import { getAllCategories } from "../../hooks/fetcher/getCategory";
-import { getProduct, getProducts } from "../../hooks/fetcher/getProducts";
+import { getProducts } from "../../hooks/fetcher/getProducts";
 import { getACategory } from "../../hooks/fetcher/getCategory";
 import { getStore } from "../../hooks/fetcher/getStore";
 import { getSubstring } from "../../hooks/helper/getSubstring";
-// import { getProduct } from "../../hooks/fetcher/getProducts";
 //Import Context
 import { ProductContext } from "../Context/ProductContext.jsx";
-import ComplexCard from "../ComplexCard/ComplexCard";
 
 export default function NavTabs() {
   const {

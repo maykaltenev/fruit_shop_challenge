@@ -14,20 +14,31 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ViewedCard from "../ViewedCard/ViewedCard";
+import HistoryIcon from "@mui/icons-material/History";
+import Looks5Icon from "@mui/icons-material/Looks5";
 import Home from "../Home/Home";
-
+import { Tabs } from "@mui/material";
+import { Tab } from "@mui/material";
 const drawerWidth = 140;
 export default function RecentlyViewed() {
   const { recently, fromRecentFive, setFromRecentFive } =
     useContext(ProductContext);
+  const [valueTab, setValueTab] = useState(0);
   const navigate = useNavigate();
   const { store } = useParams;
 
   const handleChange = (e) => {
     const name = e.target.getAttribute("name");
+    console.log("name", name);
+
     const found = recently?.find((item) => item?.name === name);
+
+    const indexValue = recently.findIndex((item) => item === found);
+    console.log("index", indexValue);
+    setValueTab(indexValue);
     setFromRecentFive(found);
-    navigate("/viewed");
+
+    navigate(`/viewed/${found?.name}/${found?.store}`);
   };
   return (
     <Box sx={{ display: "flex" }}>
@@ -60,30 +71,28 @@ export default function RecentlyViewed() {
       >
         <Toolbar />
 
-        <Typography sx={{ fontSize: 25 }} variant="h6" noWrap component="div">
+        <Typography sx={{ fontSize: 27 }} variant="h6" noWrap component="div">
           Fruit Shop
         </Typography>
         <Divider />
-        <List sx={{ bgcolor: "#FF9933", height: "100%" }}>
-          <ListItem>
-            <ListItemText primary={"Last 5 Viewed"} />
-          </ListItem>
-          {recently?.map((item, index) => (
-            <ListItem onClick={handleChange} key={index} disablePadding>
-              <div
-                name={item?.name}
-                style={{
-                  fontSize: 14,
-                  width: "100%",
-                  cursor: "pointer",
-                  padding: 9,
-                  borderBottom: "2px red solid",
-                }}
-              >
-                {item?.name}
-              </div>
-            </ListItem>
-          ))}
+        <List sx={{ bgcolor: "#FF9933", p: 1, height: "100%" }}>
+          <Box display="flex" justifyContent="center" sx={{ p: 2 }}>
+            <Looks5Icon />
+            <HistoryIcon />
+          </Box>
+          <Divider />
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            onChange={handleChange}
+            value={valueTab}
+            scrollButtons
+            allowScrollButtonsMobile
+          >
+            {recently?.map((recently, i) => (
+              <Tab key={i} label={recently?.name} name={recently?.name} />
+            ))}
+          </Tabs>
         </List>
       </Drawer>
     </Box>

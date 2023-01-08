@@ -10,17 +10,10 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { CardActionArea } from "@mui/material";
 
 // Routing
-import { useNavigate, useParams } from "react-router-dom";
-// Fetching Products
-import { getProduct } from "../../hooks/fetcher/getProducts";
-import { getStore } from "../../hooks/fetcher/getStore";
-import { getSubstring } from "../../hooks/helper/getSubstring";
+import { useNavigate } from "react-router-dom";
+
 // ProductContext
 import { ProductContext } from "../Context/ProductContext.jsx";
 
@@ -37,7 +30,7 @@ export const ExpandMore = styled((props) => {
 
 export default function ComplexCard({ product, store, name }) {
   const [expanded, setExpanded] = useState(false);
-  const { data, result, setDetailed, detailed, recently, setRecently } =
+  const { result, setDetailed, detailed, setRecently } =
     useContext(ProductContext);
   const navigate = useNavigate();
 
@@ -50,7 +43,6 @@ export default function ComplexCard({ product, store, name }) {
 
     if (name === "category") {
       let found = result?.find((item) => item?.name === value);
-
       setDetailed(found);
       handleExpandClick();
       updateRecently(found);
@@ -94,11 +86,6 @@ export default function ComplexCard({ product, store, name }) {
           <Avatar sx={{ fontSize: 8, bgcolor: red[500] }} aria-label="recipe">
             {product?.name}
           </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
         }
         title={product?.name}
         subheader={product?.price + " €"}
