@@ -27,7 +27,7 @@ export default function NavTabs() {
     setDetailed,
     detailed,
   } = useContext(ProductContext);
-
+  const [valueCategoryTab, setValueCategoryTab] = useState("0");
   const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
@@ -39,9 +39,11 @@ export default function NavTabs() {
   useEffect(() => {
     const fetchData = () => {
       setTimeout(async () => {
-        const response = await getAllCategories();
-        console.log(response);
-        setAllCategory(response);
+        let response = await getAllCategories();
+        const allProducts = response.map((item) => item.products).flat();
+        const all = { name: "All", products: allProducts };
+        const allCategoryUpdated = [all, ...response];
+        setAllCategory(allCategoryUpdated);
       }, 2000);
     };
     fetchData();
@@ -52,59 +54,39 @@ export default function NavTabs() {
       let result;
       let counter = 0;
       const maxAttempts = 99;
+      console.log(category);
       do {
         try {
-          if (category !== 0 && category !== undefined) {
+          if (category !== undefined) {
+            const found = allCategory.find((item) => item?.name === category);
+            const foundIndex = allCategory.findIndex((item) => item === found);
+            setValueCategoryTab(foundIndex);
             const aCategory = await getACategory(category);
-            if (aCategory) {
-              const found = aCategory?.map(
+            let tabProducts;
+            if (aCategory && category !== "All") {
+              tabProducts = aCategory?.map(
                 (item) => `https://api.predic8.de:443${item?.product_url}`
               );
-              result = await getProducts(found);
-              if (result !== undefined) {
-                let resolvedValues = await Promise.all(
-                  result.map(async (item) => {
-                    let category = getSubstring(item?.category_url);
-                    let store = await getStore(item?.vendor_url).then(
-                      (data) => data?.name
-                    );
-                    return { ...item, category, store };
-                  })
-                );
-                localStorage.setItem("result", JSON.stringify(resolvedValues));
-                setResult(resolvedValues);
-              } else {
-                throw "Error fetching products";
-              }
             } else {
-              const found = allCategory
-                ?.map((item) =>
-                  item?.products?.map(
-                    (item) => `https://api.predic8.de:443${item?.product_url}`
-                  )
-                )
-                .flat();
-              if (found !== undefined) {
-                if (result !== undefined) {
-                  let resolvedValues = await Promise.all(
-                    result.map(async (item) => {
-                      let category = getSubstring(item?.category_url);
-                      let store = await getStore(item?.vendor_url).then(
-                        (data) => data?.name
-                      );
-                      return { ...item, category, store };
-                    })
+              tabProducts = found?.products?.map(
+                (item) => `https://api.predic8.de:443${item?.product_url}`
+              );
+            }
+            result = await getProducts(found);
+            if (result !== undefined) {
+              let resolvedValues = await Promise.all(
+                result.map(async (item) => {
+                  let category = getSubstring(item?.category_url);
+                  let store = await getStore(item?.vendor_url).then(
+                    (data) => data?.name
                   );
-                  console.log("all resolved", resolvedValues);
-                  localStorage.setItem(
-                    "result",
-                    JSON.stringify(resolvedValues)
-                  );
-                  setResult(resolvedValues);
-                } else {
-                  throw "Error fetching products";
-                }
-              }
+                  return { ...item, category, store };
+                })
+              );
+              localStorage.setItem("result", JSON.stringify(resolvedValues));
+              setResult(resolvedValues);
+            } else {
+              throw "Error fetching products";
             }
           }
         } catch (error) {
@@ -117,16 +99,15 @@ export default function NavTabs() {
   }, [category]);
 
   return (
-    <Box sx={{ width: "50%" }}>
+    <Box sx={{ width: "70%" }}>
       {allCategory ? (
         <Tabs
           onChange={handleChange}
-          value={category}
+          value={allCategory[valueCategoryTab]?.name}
           variant="scrollable"
           scrollButtons
           allowScrollButtonsMobile
         >
-          <Tab label="All" />
           {allCategory?.map((allCategory, i) => (
             <Tab key={i} label={allCategory?.name} value={allCategory?.name} />
           ))}

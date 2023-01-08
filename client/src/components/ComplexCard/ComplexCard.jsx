@@ -32,6 +32,7 @@ export default function ComplexCard({ product, store, name }) {
   const [expanded, setExpanded] = useState(false);
   const { result, setDetailed, detailed, setRecently } =
     useContext(ProductContext);
+
   const navigate = useNavigate();
 
   const handleExpandClick = () => {
