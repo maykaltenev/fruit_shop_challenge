@@ -3,7 +3,7 @@ const ProductContext = createContext(null);
 const ProductContextProvider = ({ children }) => {
   const [product, setProduct] = useState(null);
   const [allCategory, setAllCategory] = useState(0);
-  const [category, setCategory] = useState(0);
+  const [category, setCategory] = useState("All");
   const [detailedCategory, setDetailedCategory] = useState(null);
   const [fromRecentFive, setFromRecentFive] = useState("");
 

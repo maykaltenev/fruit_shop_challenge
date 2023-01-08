@@ -20,12 +20,12 @@ export default function NavTabs() {
     allCategory,
     setAllCategory,
     category,
-
+    result,
     setResult,
     setCategory,
     setProduct,
   } = useContext(ProductContext);
-  const [valueCategoryTab, setValueCategoryTab] = useState("0");
+  const [valueCategoryTab, setValueCategoryTab] = useState(0);
   const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
@@ -42,7 +42,8 @@ export default function NavTabs() {
         const all = { name: "All", products: allProducts };
         const allCategoryUpdated = [all, ...response];
         setAllCategory(allCategoryUpdated);
-      }, 2000);
+        handleChange("All");
+      }, 5000);
     };
     fetchData();
   }, []);
@@ -70,7 +71,6 @@ export default function NavTabs() {
                 (item) => `https://api.predic8.de:443${item?.product_url}`
               );
             }
-
             result = await getProducts(tabProducts);
             if (result !== undefined) {
               let resolvedValues = await Promise.all(
