@@ -71,7 +71,7 @@ const List = () => {
   return (
     <div>
       {data && (
-        <Box sx={{ maxWidth: 220, marginY: 2 }}>
+        <Box sx={{ marginY: 2, minWidth: 150 }} fullWidth>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Fruit</InputLabel>
             <Select
@@ -79,6 +79,7 @@ const List = () => {
               id="demo-simple-select"
               value={select}
               label="Fruit"
+              fullWidth
               onChange={handleChange}
             >
               {data?.map((product, i) => (

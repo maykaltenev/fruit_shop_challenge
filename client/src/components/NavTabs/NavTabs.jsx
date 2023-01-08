@@ -29,7 +29,7 @@ export default function NavTabs() {
     setDetailed,
     detailed,
   } = useContext(ProductContext);
-  const [isError, setIsError] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
@@ -119,7 +119,7 @@ export default function NavTabs() {
   }, [category]);
 
   return (
-    <Box sx={{ width: "40%" }}>
+    <Box sx={{ width: "50%" }}>
       {allCategory ? (
         <Tabs
           onChange={handleChange}

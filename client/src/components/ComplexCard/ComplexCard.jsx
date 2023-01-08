@@ -117,7 +117,6 @@ export default function ComplexCard({ product, store, name }) {
           onClick={handleClick}
           aria-label="add to favorites"
           value={product?.name}
-          sx={name === "recently" ? { fontSize: 12 } : { fontSize: 20 }}
         >
           Show details
         </IconButton>

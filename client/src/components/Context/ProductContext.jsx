@@ -5,6 +5,7 @@ const ProductContextProvider = ({ children }) => {
   const [allCategory, setAllCategory] = useState(0);
   const [category, setCategory] = useState(0);
   const [detailedCategory, setDetailedCategory] = useState(null);
+  const [fromRecentFive, setFromRecentFive] = useState("");
 
   const [suggestions, setSuggestions] = useState([]);
   const [data, setData] = useState(null);
@@ -57,6 +58,8 @@ const ProductContextProvider = ({ children }) => {
         setData,
         recently,
         setRecently,
+        fromRecentFive,
+        setFromRecentFive,
       }}
     >
       {children}

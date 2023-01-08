@@ -15,18 +15,18 @@ import Home from "./components/Home/Home";
 import CategoryCard from "./components/CategoryCard/CategoryCard";
 import ActionAreaCard from "./components/Card/Card";
 import RecentlyViewed from "./components/RecentlyViewed/RecentlyViewed";
+import ViewedCard from "./components/ViewedCard/ViewedCard";
 function App() {
-  const { product, result } = useContext(ProductContext);
+
 
   return (
     <div>
-      <Home />
       <RecentlyViewed />
       <Routes >
-        <Route path="/" element={<Home />} />
-        <Route path="/list" element={<ActionAreaCard />} />
+        <Route path="/" />
+        < Route path="/list" element={<ActionAreaCard />} />
         <Route path="/tabs" element={<CategoryCard />} />
-        {/* <Route path="/product/:name" element={<CategoryCard />} /> */}
+        <Route path="/viewed" element={<ViewedCard />} />
         <Route path="/product/:name" element={<DetailedPage />} />
         <Route path="/product/:name/:store" element={<DetailedPage />} />
       </Routes>
